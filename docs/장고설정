@@ -1,0 +1,140 @@
+- 기본적으로 장고 프로젝트 한 개당 하나의 DB를 사용!
+- 장고 프로젝트에는 기본적으로 관리 프로그램이 내장되기 때문에
+
+
+- postgresql 에 DB 생성 및 계정 생성, 접근권한 부여
+DB 생성
+1. create database pysite;
+2. create user pysite with password 'pysite';
+3. grant all privileges on all tables in schema public to pysite;
+4. data/pg_hba.conf 접근 설정
+
+권한 부여
+
+- pycharm 에서 Django 프로젝트 시작하기
+
+1. Pycharm 프로젝트 생성(pysite 프로젝트)
+
+2. Django 설치하기
+  [터미널]
+  pip install django
+
+3. Django 프로젝트 생성
+  [터미널]
+  django-admin startproject python_ch3
+
+4. 디렉토리 정리
+ -> pycharm 프로젝트와 django 프로젝트의 디렉토리 일치시키는 작업
+
+python_ch3
+    |- python_ch3
+        |-manage.py  -맨위 디렉토리로 이동
+        |-장고용 파일 -python_ch3 아래로 이동
+    |- lib
+
+5. psycopg2(postgres DB lib) 설치
+  [터미널]
+  pip install psycopg2
+
+6. settings.py 설정
+    1) TIME_ZONE = 'Asia/Seoul'
+    2) DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': 'pysite',
+                'USER': 'pysite',
+                'PASSWORD': 'pysite',
+                'HOST': '192.168.1.49',
+                'PORT':5432
+            }
+        }
+
+    3) Template 디렉토리 설정
+    TEMPLATES = [
+        {
+            'BACKEND': 'django.template.backends.django.DjangoTemplates',
+         @@@'DIRS': [os.path.join(BASE_DIR), 'templates'],
+            'APP_DIRS': True,
+            'OPTIONS': {
+                'context_processors': [
+                    'django.template.context_processors.debug',
+                    'django.template.context_processors.request',
+                    'django.contrib.auth.context_processors.auth',
+                    'django.contrib.messages.context_processors.messages',
+                ],
+            },
+        },
+    ]
+
+    python_ch3
+        |-----templates
+
+
+7. 장고 프로젝트의 기본 관리 어플리케이션이 사용하는 테이블을 생성
+  [터미널]
+  python manage.py migrate
+
+8. 장고 프로젝트의 기본 관리 어플리케이션 로그인 계정 생성 (관리 계정 생성하기)
+  [터미널]
+  python manage.py createsuperuser
+
+9. 지금까지 작업 내용 확인하기
+  [터미널]
+  python manage.py runserver 0.0.0.0:8888
+
+============================================================================
+Application 작업
+    1) main
+        1. 어플리케이션 추가
+          [터미널]
+          python manage.py startapp main
+
+        2. settings  >> app에 어플리케이션 등록 (settings.py)
+            INSTALLED_APPS = [
+            'main'
+            ....
+            ....]
+
+        3. template
+            |--- main
+        어플리케이션 template 디렉토리 생성
+
+        4. Model 정의(생략)
+        5. urls.py 에서 url-view의 handler mapping
+        6. views.py 에서 handler 함수 추가 구현(요청 처리, 모델 작업, 응답 처리)등 business 관련
+        7. 화면이 필요한 경우, 해당 template 작업
+
+    2) user
+    1. 어플리케이션 추가
+          [터미널]
+          python manage.py startapp emaillist
+    2. settings  >> app에 어플리케이션 등록 (settings.py)
+            INSTALLED_APPS = [
+            'emaillist'
+            ....
+            ....]
+    3. template
+            |--- helloworld
+        어플리케이션 template 디렉토리 생성
+
+    4. Model 정의(생략)
+        4-1 model 정의 (models에서 클래스 생성, (vo, 테이블까지 생성)
+        4-2 admin.py 에
+            admin.site.register(Emailist)
+
+        4-3 migrations 이름의 DDL python 모듈을 make
+            (python manage.py makemigrations)
+        4-4 물리 DB와 스키마 동기화 작업
+            python manage.py migrate
+
+
+
+
+    5. urls.py 에서 url-view의 handler mapping
+    6. views.py 에서 handler 함수 추가 구현(요청 처리, 모델 작업, 응답 처리)등 business 관련
+    7. 화면이 필요한 경우, 해당 template 작업
+
+    4) STATIC 디렉토리 설정 및 URL 맵핑으로 CSS같은 ASSET (STATICS) 파일 위치지정
+        STATIC
+
+

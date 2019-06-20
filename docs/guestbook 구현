@@ -1,0 +1,31 @@
+1. model
+
+2. /gustbook/deleteform?id=10
+ /gustbook/deleteform/10
+
+<urls.py>
+    path('hello2/<int:id>/', helloworld_views.hello2)
+
+<views.py>
+# pathvariable을 받을 때는 파라미터로 넣어주기
+def hello2(request, id=0):
+    return HttpResponse(f'id:{id}')
+
+
+3. orm method
+    index(list) --> ok
+    add -> ok
+    delete
+    1. repository에서 객체를 영속화
+        guestbook = Guestbook.objects.filter(id=20).filter(password='1234')
+        guestbook.delete()
+
+
+
+
+
+
+[구현 안해도 되는 것]
+list.html 템플릿에서
+1. 메세지 index 하지않음 django template arithmetic operation
+2. 메세지 개행문자 <br>로 replace 하지않음 django template replace
