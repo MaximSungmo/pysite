@@ -1,5 +1,5 @@
 {% extends '../base.html' %}
-
+{% load django_template_maths %}
 
 {% block csslink%}
 <link href="/assets/css/guestbook.css" rel="stylesheet" type="text/css">
@@ -16,7 +16,8 @@
 							<td>비밀번호</td><td><input type="password" name="password"></td>
 						</tr>
 						<tr>
-							<td colspan=4><textarea name="content" id="content"></textarea></td>
+							<td colspan=4><textarea name="content" id="content">
+							</textarea></td>
 						</tr>
 						<tr>
 							<td colspan=4 align=right><input type="submit" VALUE=" 확인 "></td>
@@ -24,24 +25,48 @@
 					</table>
 				</form>
 				<ul>
-					<li>
 						{% for guestbook in guestbooks%}
-						<table>
+					<li>
+					{% if forloop.first%}
+						<table style='border-collapse:; border:4px solid #666; background-color: #bbb'>
 							<tr>
-								<td>{{guestbook.id}}</td>
+
+								{% comment 'forloop variable' %}
+								<td>{{ forloop.revcounter }}</td>
+								{% endcomment %}
+
+								<td>{{ guestbooks.count | sub:forloop.counter | add:1 }}</td>
 								<td>{{guestbook.name}}</td>
-								<td>{{guestbook.reg_date}}</td>
+								<td>{{guestbook.reg_date | date:'Y-m-d H:i:s'}}</td>
 								<td><a href="/guestbook/delete/{{guestbook.id}}">삭제</a></td>
 							</tr>
 							<tr>
 								<td colspan=4>
-									{{guestbook.content}}
+									{{guestbook.content|linebreaks}}
 								</td>
 							</tr>
 						</table>
-						{% endfor %}
+					{% else %}
+						<table>
+							<tr>
+								<td>{{ forloop.revcounter }}</td>
+								<td>{{guestbook.name}}</td>
+								<td>{{guestbook.reg_date | date:'Y-m-d H:i:s'}}</td>
+								<td><a href="/guestbook/delete/{{guestbook.id}}">삭제</a></td>
+							</tr>
+							<tr>
+								<td colspan=4>
+									{{guestbook.content|linebreaks}}
+								</td>
+							</tr>
+						</table>
+					{% endif %}
+
+<!--						&#45;&#45;{{ guestbooks | length}}&#45;&#45;{{guestbooks.count}}&#45;&#45;-->
 						<br>
 					</li>
+					{% endfor %}
+
 				</ul>
 			</div>
 		</div>

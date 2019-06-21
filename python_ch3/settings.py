@@ -43,6 +43,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # view에서 계산을 하기 위한 math 함수 설치
+    'django_template_maths',
+    # 또는 아래의 것으로 설치
+    # 'django-mathfilters'
+
 ]
 
 MIDDLEWARE = [
