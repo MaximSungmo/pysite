@@ -2,6 +2,53 @@
 
 {% block csslink%}
 <link href="/assets/css/user.css" rel="stylesheet" type="text/css">
+
+<!-- 제이쿼리 라이브러리 호출  -->
+<script	src="/assets/js/jquery/jquery-1.9.0.js"></script>
+
+<script>
+	$(function(){
+		$('#email').change(function() {
+			$('#btn-email').show();
+			$('#check-image').hide();
+		});
+
+		$('#btn-email').click(function(){
+			var email = $('#email').val();
+			if(email == ''){
+				return;
+			}
+
+			$.ajax({
+				url: '/user/api/checkemail?email='+email,
+				type: 'get',
+				dataType: 'json',
+				success: function(response){
+					if (response.result != "success") {
+						console.log(response);
+						return;
+					}
+					if (response.data == 'exist') {
+						alert('이미 존재하는 Email 입니다.\n 다른 이메일을 사용하세요.');
+						$("#email").focus();
+						$("#email").val("");
+						return;
+					}
+
+					$('#btn-email').hide();
+					$('#check-image').show();
+
+				},
+				error : function(xhr, error) {
+					console.error("error" + error);
+				}
+			})
+		console.log(email);
+	});
+})
+
+</script>
+
 {% endblock %}
 
 		{% block content %}
@@ -14,7 +61,9 @@
 
 					<label class="block-label" for="email">이메일</label>
 					<input id="email" name="email" type="text" value="">
-					<input type="button" value="id 중복체크">
+					<input type="button" value="email체크" id="btn-email">
+					<img style="display:none" id="check-image"	src="/assets/images/check.png" />
+
 					
 					<label class="block-label">패스워드</label>
 					<input name="password" type="password" value="">
@@ -37,3 +86,5 @@
 			</div>
 		</div>
 		{% endblock %}
+
+

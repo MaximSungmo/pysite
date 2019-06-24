@@ -1,7 +1,7 @@
 from django.contrib import auth
 from django.contrib.auth import authenticate
 from django.forms import model_to_dict
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 
 # Create your views here.
@@ -76,3 +76,18 @@ def update(request):
     user.save()
     request.session['authuser'] = model_to_dict(user)
     return HttpResponseRedirect('/user/updateform?result=success')
+
+
+# Jquery ajax 통신
+def checkemail(request):
+    try:
+        user = User.objects.get(email=request.GET['email'])
+    except Exception as e:
+        user = None
+
+    result = {
+        'result': 'success',
+        'data': 'Not exist' if user is None else 'exist'
+    }
+    return JsonResponse(result)
+

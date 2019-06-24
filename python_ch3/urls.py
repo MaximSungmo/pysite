@@ -16,7 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+import board.views as board_views
+
+
+
 urlpatterns = [
+    path('board/', include('board.urls')),
     path('guestbook/', include('guestbook.urls')),
     path('user/', include('user.urls')),
     path('', include('main.urls')),

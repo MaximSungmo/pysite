@@ -1,0 +1,52 @@
+{% extends '../base.html' %}
+
+{% block csslink%}
+<link href="/assets/css/user.css" rel="stylesheet" type="text/css">
+{% endblock %}
+
+		{% block content %}
+
+		<script>
+			{% if request.GET.result == 'success' %}
+				alert('정보 수정 완료')
+			{% elif request.GET.result == 'fail' %}
+				alert('패스워드를 입력하세요')
+			{% endif %}
+		</script>
+
+		<div id="content">
+			<div id="user">
+
+				<form id="join-form" name="joinForm" method="post" action="/user/update">{% csrf_token%}
+					<label class="block-label" for="name">이름</label>
+					<input id="name" name="name" type="text" value="{{user.name}}">
+
+					<label class="block-label">이메일</label>
+					<h4>{{ user.email }}</h4>
+
+					<label class="block-label">패스워드</label>
+					<input name="password" type="password" value="">
+					
+					<fieldset>
+						<legend>성별</legend>
+						{% if user.gender == 'female' %}
+							<label>여</label> <input type="radio" name="gender" value="female" checked="checked">
+							<label>남</label> <input type="radio" name="gender" value="male">
+						{% else %}
+							<label>여</label> <input type="radio" name="gender" value="female">
+							<label>남</label> <input type="radio" name="gender" value="male" checked="checked">
+						{% endif %}
+					</fieldset>
+					
+					<fieldset>
+						<legend>약관동의</legend>
+						<input id="agree-prov" type="checkbox" name="agreeProv" value="y">
+						<label>서비스 약관에 동의합니다.</label>
+					</fieldset>
+					
+					<input type="submit" value="가입하기">
+					
+				</form>
+			</div>
+		</div>
+		{% endblock %}

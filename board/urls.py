@@ -16,28 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-import main.views as main_views
-import user.views as user_views
+import board.views as board_views
+
 
 urlpatterns = [
-
-    # 회원가입
-    path('joinform/', user_views.joinform),
-    path('join', user_views.join),
-    path('joinsuccess', user_views.joinsuccess),
-
-    # 로그인
-    path('loginform', user_views.loginform),
-    path('login', user_views.login),
-
-    # 로그아웃
-    path('logout', user_views.logout),
-
-    # 업데이트
-    path('updateform', user_views.updateform),
-    path('update', user_views.update),
-
-    # 이메일 중복체크
-    path('api/checkemail', user_views.checkemail)
+    path('<page>', board_views.list),
+    path('modify/<int:id>', board_views.modify),
+    path('view/<int:id>', board_views.view),
+    path('write/', board_views.write),
+    path('<int:id>/reply', board_views.reply),
+    path('delete/<int:id>', board_views.delete),
 
 ]

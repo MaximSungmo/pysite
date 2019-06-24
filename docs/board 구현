@@ -1,0 +1,24 @@
+1. limit 처리
+    start = (page-1)*pagesize
+    Board.objects.all().order_by('-reg_date')[start:start+pagesize]
+
+2. insert
+    board = Board()
+    board.title = request.POST['title']
+
+    board.user_id = request.session.authuser.id
+    board.save()
+
+3. increase hit
+    board = Board.objects.filter(id=id)
+    board.hit = board.hit + 1
+    board.save()
+
+4. TotalCount
+    Board.objects.count()
+
+
+
+
+
+

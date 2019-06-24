@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'main',
     'user',
     'guestbook',
+    'board',
 
 
     'django.contrib.admin',
@@ -136,3 +137,8 @@ USE_TZ = True
 # CSS 적용을 위한 설정임.
 STATICFILES_DIRS =(os.path.join(BASE_DIR, 'statics'),)
 STATIC_URL = '/assets/'
+
+
+# session
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_SAVE_EVERY_REQUEST = True
