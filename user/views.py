@@ -1,10 +1,9 @@
-from django.contrib import auth
-from django.contrib.auth import authenticate
 from django.forms import model_to_dict
 from django.http import HttpResponseRedirect, JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
 
 # Create your views here.
+
 from user.models import User
 
 

@@ -26,5 +26,4 @@ urlpatterns = [
     path('write/', board_views.write),
     path('<int:id>/reply', board_views.reply),
     path('delete/<int:id>', board_views.delete),
-
 ]

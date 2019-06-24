@@ -22,7 +22,7 @@
 				</form>
 				<table class="tbl-ex">
 					<tr>
-						<th>번호{{response.result}}1</th>
+						<th>번호</th>
 						<th>제목</th>
 						<th>글쓴이</th>
 						<th>조회수</th>
@@ -31,7 +31,7 @@
 					</tr>
 					{% for board in board_list%}
 					<tr>
-						<td>{{ forloop.revcounter }}</td>
+						<td>{{index_no|sub:forloop.counter|add:1}}</td>
 						<td style="text-align:left; padding-left:{{board.depth|mul:20 }}px">
 							<a href="/board/view/{{ board.id }}">
 							{% if board.depth != 0 %}
