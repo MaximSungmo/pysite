@@ -8,8 +8,8 @@
 		{% block content %}
 		<div id="content">
 			<div id="board">
-				<form id="search_form" action="" method="post">
-					<input type="text" id="kwd" name="kwd" value="">
+				<form id="search_form" action="" method="get">
+					<input type="text" id="kwd" name="q" value="{{q}}">
 					<input type="submit" value="찾기">
 				</form>
 				<table class="tbl-ex">
@@ -44,8 +44,7 @@
 				<!-- 페이저 추가 -->
 
 				<div class="pager">
-					<ul>{{page}}page
-						totalitemeno {{total_item_no}}
+					<ul>
 						{% if page == 1%}
 						<li>◀  </li>
 						{% else %}
@@ -53,17 +52,19 @@
 						{% endif %}
 
 						{% for i in i|rjust:"5" %}
-						<li><a href="/board/{{forloop.counter}}">{{forloop.counter}}</a></li>
-						{% if page == 1%}
-						<li class="selected"><a href="/board/{{forloop.counter}}">{{forloop.counter}}</a></li>
+						{% if page == page_view|add:forloop.counter%}
+							<li class="selected"><a href="/board/{{forloop.counter}}}?q={{q}}">{{page_view | add:forloop.counter}}</a></li>
+						{% else %}
+							<li><a href="/board/{{forloop.counter}}?q={{q}}">{{page_view | add:forloop.counter}}</a></li>
 						{% endif%}
+
 						{% endfor %}
 
 
 						{% if page < total_page_no %}
-						<li><a href="/board/{{page|add:+1}}">▶</a></li>
+						<li><a href="/board/{{page|add:+1}}}?q={{q}}">▶</a></li>
 						{% else %}
-						<li>▶{{total_page_no}}</li>
+						<li>▶</li>
 						{% endif %}
 					</ul>
 				</div>
