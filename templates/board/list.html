@@ -3,6 +3,14 @@
 {% load django_template_maths %}
 {% block csslink%}
 <link href="/assets/css/board.css" rel="stylesheet" type="text/css">
+<script	src="/assets/js/jquery/jquery-1.9.0.js"></script>
+<script>
+	{% if request.GET.result == 'success' %}
+		alert('삭제 완료')
+	{% elif request.GET.result == 'fail' %}
+		alert('본인의 글이 아닙니다.')
+	{% endif %}
+</script>
 {% endblock %}
 
 		{% block content %}
@@ -14,7 +22,7 @@
 				</form>
 				<table class="tbl-ex">
 					<tr>
-						<th>번호</th>
+						<th>번호{{response.result}}1</th>
 						<th>제목</th>
 						<th>글쓴이</th>
 						<th>조회수</th>
@@ -62,7 +70,7 @@
 
 
 						{% if page < total_page_no %}
-						<li><a href="/board/{{page|add:+1}}}?q={{q}}">▶</a></li>
+						<li><a href="/board/{{page|add:+1}}?q={{q}}">▶</a></li>
 						{% else %}
 						<li>▶</li>
 						{% endif %}
